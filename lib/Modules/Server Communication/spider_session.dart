@@ -117,7 +117,7 @@ class SpiderCASBSession{
   }
 
   static bool isRequestSuccessful(Response<dynamic>? request){
-    return request==null || request.statusCode != null && request.statusCode! >= 200 && request.statusCode! <= 299;
+    return request!=null && request.statusCode != null && (request.statusCode! >= 200 && request.statusCode! <= 299);
   }
 
 

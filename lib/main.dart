@@ -1,6 +1,8 @@
 import 'package:demo_spider_casb_mobile/Features/Autentification/authentification_screen.dart';
 import 'package:demo_spider_casb_mobile/Features/Chat%20Menu/chat_menu_screen.dart';
 import 'package:demo_spider_casb_mobile/Features/Chat/chat_screen.dart';
+import 'package:demo_spider_casb_mobile/Features/Issue/issue_data_screen.dart';
+import 'package:demo_spider_casb_mobile/Features/Issues%20Menu/issue_menu_screen.dart';
 import 'package:demo_spider_casb_mobile/Features/Log%20In/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,7 @@ class SpiderCASBMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chatter',
@@ -21,9 +24,11 @@ class SpiderCASBMobileApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login' : (context) => LoginScreen(),
-        '/chats' : (context) => ChatsMenuScreen(),
+        '/chats' : (context) =>  ChatsMenuScreen(),
         '/chats/chat' : (context) => ChatScreen(),
         '/authenticate' : (context) => AuthentificationScreen(),
+        '/issues' : (context) => IssuesMenuScreen(),
+        '/issues/issue' : (context) => IssueDataScreen(),
       },
     );
   }

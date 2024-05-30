@@ -88,6 +88,7 @@ class _AuthentificationScreenState extends State<AuthentificationScreen> {
             ),
           ),
         ),
+      showNavBar: false,
     );
   }
 }

@@ -15,6 +15,7 @@ abstract class ChatInfoWidget extends StatelessWidget{
 
   factory ChatInfoWidget.fromData(ChatInfoData data){
     if(data.chatType == "Secret"){
+
       return SecretChatWidget(data);
     }else{
       return BaseChatWidget(data);
@@ -32,8 +33,11 @@ abstract class ChatInfoWidget extends StatelessWidget{
   }
 
   Widget ChatInfoFrame(BuildContext context){
+
+    bool isSecretChat = data.chatType == "Secret";
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       height: 80,
       decoration: BoxDecoration(
         boxShadow: const [
@@ -51,14 +55,28 @@ abstract class ChatInfoWidget extends StatelessWidget{
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                  width: 60,
-                  height: 60,
+              Container(
+                  width: 58,
+                  height: 58,
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      color: isSecretChat ? Color.fromARGB(250, 111, 2, 161):  Color.fromARGB(236, 210, 111, 255) ,
+                  ),
+                  padding: const EdgeInsets.all(8),
                   child: AvatarGenerator(
-                    seed: "${data.chatID}_${data.chatType}",
+                    seed: "${data.chatID}_${data.chatType}_2",
+                    colors: isSecretChat
+                        ? const [Color.fromARGB(255, 230, 192, 246), Color.fromARGB(255, 209, 133, 246)]
+                        : const [Color.fromARGB(255, 230, 230, 250), Color.fromARGB(255, 231, 196, 248)],
+                    mirroredHorizontally: false,
+                    mirroredVertically: false,
+                    horizontalTileCount: 3,
+                    verticalTileCount: 3,
                   )
               ),
-
+              const SizedBox(
+                width: 12,
+              ),
               Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -88,15 +106,19 @@ abstract class ChatInfoWidget extends StatelessWidget{
                                   softWrap: true,
                                 ),
                                 const SizedBox(width: 4,),
-                                Text(
+                                Expanded(
+                                  child: Text(
                                   data.lastMessage.message,
                                   style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                  maxLines: 2,
-                                  softWrap: true,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  overflow: TextOverflow.fade,
                                 ),
+                                )
+
                               ]
                           )
                       )
@@ -105,10 +127,10 @@ abstract class ChatInfoWidget extends StatelessWidget{
               ),
               const SizedBox(width: 4,),
               SizedBox(
-                width: 36,
+                width: 46,
                 child: Text(
                   data.lastMessage.shortTimeStr,
-                  maxLines: 2,
+                  textAlign: TextAlign.center,
                 ),
               )
             ],

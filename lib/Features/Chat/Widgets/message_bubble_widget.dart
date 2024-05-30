@@ -8,26 +8,29 @@ class MessageBubble extends StatelessWidget {
   final MessageData messageData;
   bool get isUser => _isUserCashed;
   final bool _isUserCashed;
+  final bool _showName;
 
-  MessageBubble(this.messageData) :
-  _isUserCashed = messageData.senderID == SpiderCASBSession.instance.userId;
+
+  MessageBubble(this.messageData, int lastSenderID) :
+  _isUserCashed = messageData.senderID == SpiderCASBSession.instance.userId,
+  _showName = messageData.senderID != lastSenderID;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: Column(
         crossAxisAlignment:
         isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
+          _showName ?  Container(
             padding: const EdgeInsets.symmetric(horizontal: 3),
             child: Text(
               messageData.senderName,
               style: const TextStyle(
                   fontSize: 16,  color: Colors.black87),
             ),
-          ),
+          ) : const SizedBox(width: 0, height: 0,),
           Material(
             borderRadius: BorderRadius.only(
               bottomLeft: const Radius.circular(25),

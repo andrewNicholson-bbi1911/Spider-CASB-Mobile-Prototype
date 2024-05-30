@@ -83,6 +83,7 @@ class _ChatsMenuScreenState extends State<ChatsMenuScreen>{
         padding: const EdgeInsets.only(left: 4, right: 4),
         child: bodyWidget,
       ),
+      showNavBar: true,
     );
   }
 

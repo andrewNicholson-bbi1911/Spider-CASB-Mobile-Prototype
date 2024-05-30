@@ -115,23 +115,34 @@ class _ChatScreenState extends State<ChatScreen>{
 
     return SpiderAppScreen(
         chatInfoData.chatName,
-        body: bodyWidget
+        body: bodyWidget,
+        showNavBar: false,
     );
   }
 
   Widget MessageList(){
     //_scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     var messageAmount = widget.chatData.messages.length;
+    var lastSenderId = -1;
     return Expanded(
       child: ListView.builder(
         reverse: true,
           shrinkWrap: true,
           itemCount: messageAmount * 2,
           itemBuilder: (context, index) {
-            if(index%2 == 1){
-              return const SizedBox(height: 6);
+            var senderIndex = messageAmount - 1 - index~/2;
+            if(senderIndex - 1 <= 0){
+              lastSenderId = -1;
             }else{
-              return MessageBubble(widget.chatData.messages[messageAmount - 1 - index~/2]);
+              lastSenderId = widget.chatData.messages[senderIndex-1].senderID;
+            }
+            var currentSenderID = widget.chatData.messages[senderIndex].senderID;
+            if(index%2 == 1){
+              return SizedBox(height: lastSenderId == currentSenderID ? 0 : 6);
+            }else{
+
+              var messageBubble = MessageBubble(widget.chatData.messages[senderIndex], lastSenderId);
+              return messageBubble;
             }
           }),
     );
